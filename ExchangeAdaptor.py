@@ -68,7 +68,7 @@ class ExchangeAdaptor:
                     pass
             except Exception as e:
                 return str(e)
-            return True
+            return None
 
     def processOrder(self):
         try:
@@ -93,3 +93,5 @@ class ExchangeAdaptor:
             connector=FtxProcessor()
             pairs=connector.getMarkets()
             return self.printlist(pairs)
+    
+   
