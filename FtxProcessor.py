@@ -26,7 +26,6 @@ class FtxProcessor:
                         'enableRateLimit': True,
             })
         self.cctxConnector.load_markets()
-        #self.cctxConnector.set_sandbox_mode(True)
 
     def getMarkets(self):
         return self.cctxConnector.symbols
@@ -40,7 +39,7 @@ class FtxProcessor:
     def MarketBuy(self,ticker, size,percent=0,isDerivate=0):
         x=""
         if(percent>0):
-            tick=ticker.split("/");
+            tick=ticker.split("/")
             tick.append("X")
             if isDerivate>0:
                 tick[1]="USD"            
@@ -52,13 +51,13 @@ class FtxProcessor:
                 x=self.cctxConnector.createMarketBuyOrder(ticker,size/self.getActualPrice(ticker))
             except Exception as e:
                x=str(e)
-            print(x)
+            print("ERROR:",x)
             return x
 
     def MarketSell(self,ticker, sizebtc,percent=0,isDerivate=0):
         x=""
         if(percent>0):
-            tick=ticker.split("/");
+            tick=ticker.split("/")
             tick.append("X")
             if isDerivate>0:
                 tick=ticker.split("-")
@@ -70,7 +69,7 @@ class FtxProcessor:
             x=self.cctxConnector.createMarketSellOrder(ticker,sizebtc)
         except Exception as e:
             x=str(e)
-        print(x)
+        print("ERROR:",x)
         return x
 
     def getFuturePosition(self,ticker):
