@@ -37,7 +37,7 @@ def getExchanges():
     print("conn")
     return str(ExchangeAdaptor().get_exchanges())
     
-@app.route('/connector',methods=['POST'])
+@app.route('/',methods=['POST'])
 def orderProcessor():
     req=request.get_json()
     print(req)
