@@ -67,8 +67,8 @@ class ExchangeAdaptor:
                 except:
                     pass
             except Exception as e:
-                return str(e)
-            return None
+                pass
+            pass
 
     def processOrder(self):
         try:
