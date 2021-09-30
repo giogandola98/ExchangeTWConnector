@@ -5,9 +5,10 @@ function loadExchanges()
     $.ajax(
         {
         url : BASEURI+"/getexchanges",
+        type: 'GET',
+        dataType: 'html',
         //url: "https://raw.githubusercontent.com/giogandola98/ExchangeTWConnector/main/listTemplate.html",
-        data: { format: 'html',},
-        error : function(){alert("backend error");},
+        error : function(){alert("Backend");},
         success : function(data) 
         {
             document.getElementById("exchange").innerHTML="";
@@ -15,10 +16,20 @@ function loadExchanges()
             console.log(data);
 
         },
-        type: 'GET'
+
         });
 }
 
+function loadSupportedCommands(json)
+{
+    if(json.percent==1)
+    {
+        document.getElementById("percent").value=0;
+        document.getElementById("percent").enable=False;
+    }
+    if(json.subaccount==1)
+        document.getElementById("subaccount").enable=False;
+}
 function loadMarkets()
 {
     console.log("loadMarkets");
@@ -45,7 +56,7 @@ function buildJson()
     console.log(exchange);
 }
 
-function jsonBuild(exchange,api,secret,pair,isderivate,size,percent,side)
+function jsonBuild(exchange,api,secret,pair,isderivate,size,percent,side,subaccount)
         {
             var jsonObj={};
             jsonObj['exchange']=exchange;
@@ -56,6 +67,8 @@ function jsonBuild(exchange,api,secret,pair,isderivate,size,percent,side)
             jsonObj['size']=size;
             jsonObj['percent']=percent;
             jsonObj['side']=side;
+            if (subaccount!="")
+                jsonObj['subaccount']=subaccount;
             var x= JSON.stringify(jsonObj);
             document.getElementById('processedjson').value=x;
         }
@@ -71,5 +84,6 @@ function process_form()
     var side=       document.getElementById("side").value;
     var percent=       document.getElementById("percent").value;
     var isderivate=       document.getElementById("isderivate").value;
-    jsonBuild(exchange,apikey,secret,pair,isderivate,size,percent,side);
+    var subaccount= document.getElementById("subaccount").value;
+    jsonBuild(exchange,apikey,secret,pair,isderivate,size,percent,side,subaccount);
 }
