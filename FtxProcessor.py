@@ -29,6 +29,7 @@ class FtxProcessor:
 
     def getMarkets(self):
         return self.cctxConnector.symbols
+        
     def getBalance(self, ticker):
         return (self.cctxConnector.fetch_balance()[ticker]['free'])
         pass
@@ -38,21 +39,17 @@ class FtxProcessor:
 
     def MarketBuy(self,ticker, size,percent=0,isDerivate=0):
         x=""
-        if(percent>0):
+        if(percent!=0):
             tick=ticker.split("/")
             tick.append("X")
             if isDerivate>0:
                 tick[1]="USD"            
             size=float(self.getBalance(tick[1]))*size
-            print(tick)
-            print("BALANCE",self.getBalance(tick[1]))
-            print("BUY:",size)
-            try:
-                x=self.cctxConnector.createMarketBuyOrder(ticker,size/self.getActualPrice(ticker))
-            except Exception as e:
-               x=str(e)
-            print("ERROR:",x)
-            return x
+        try:
+            x=(self.cctxConnector.createMarketBuyOrder(ticker,size/self.getActualPrice(ticker)))
+        except Exception as e:
+            x=str(e)
+        return x
 
     def MarketSell(self,ticker, sizebtc,percent=0,isDerivate=0):
         x=""
@@ -62,14 +59,10 @@ class FtxProcessor:
             if isDerivate>0:
                 tick=ticker.split("-")
             sizebtc=float(self.getBalance(tick[0]))*sizebtc
-            print(tick)
-            print("BALANCE",self.getBalance(tick[0]))
-            print("BUY:",sizebtc)
         try:
             x=self.cctxConnector.createMarketSellOrder(ticker,sizebtc)
         except Exception as e:
             x=str(e)
-        print("ERROR:",x)
         return x
 
     def getFuturePosition(self,ticker):
@@ -80,10 +73,12 @@ class FtxProcessor:
         return 0
 
     def ClosePosition(self,ticker):
-        #da sistemare al momento, non ancora funzionante
         size=self.getFuturePosition(ticker)
-        if(size>0):
-            return self.cctxConnector.createNarketSellOrder(ticker,size,params={'reduce-only': True})
+        x=""
+        print(ticker,size)
+        if(size>=0):
+            x=self.cctxConnector.createMarketSellOrder(ticker,size,params={'reduce-only': True})
         else:
-            return self.cctxConnector.createNarketBuyOrder(ticker,size*-1,params={'reduce-only': True})
+           x= self.cctxConnector.createMarketBuyOrder(ticker,size*-1,params={'reduce-only': True})
+        return x
         
