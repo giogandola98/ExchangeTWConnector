@@ -4,8 +4,22 @@ from flask import Flask, jsonify, request
 from ExchangeAdaptor import ExchangeAdaptor
 
 app = Flask(__name__)
+@app.route("/style.css")
+def css():
+    f=open("website/style.css","r")
+    index=f.read()
+    f.close()
+    return index
+
+@app.route("/processor.js")
+def javascript():
+    f=open("website/processor.js","r")
+    index=f.read()
+    f.close()
+    return index
+
 @app.route("/")
-def helloword():
+def index():
     f=open("website/index.html","r")
     index=f.read()
     f.close()
