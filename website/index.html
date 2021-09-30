@@ -1,0 +1,106 @@
+<html>
+
+
+<br>
+<br>
+
+    <head>
+        <title>Exchange Connector Interface</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="./style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script type="text/javascript" src="processor.js"></script>
+    </head>
+    <body onload="loadExchanges();">
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Home</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+              <div class="navbar-nav">
+                <a class="nav-item nav-link" href="https://github.com/giogandola98/ExchangeTWConnector/">GitHub</a>
+                <a class="nav-item nav-link" href="#">Docs</a>
+                <a class="nav-item nav-link" href="#donations">Donations</a>
+              </div>
+            </div>
+          </nav>
+
+
+
+        
+        <form >
+            <div class="form-group">
+              <label for="exchange">Exchange </label>
+              <select name="exchange" id=exchange onchange="loadMarkets();"></select>
+            </div>
+            <div class="form-group">
+              <label for="apikey">Api Key</label>
+              <input type="text" class="form-control" id="apikey" placeholder="Api Key Here">
+            </div>
+            <div class="form-group">
+                <label for="apisecret">Api Key</label>
+                <input type="password" class="form-control" id="apisecret" placeholder="Api Secret Here">
+            </div>
+            <div class="form-group">
+                <label for="Subaccount">Subaccount (optional)</label>
+                <input type="text" class="form-control" id="subaccount" placeholder="Subaccount Here (optional)">
+            </div>
+
+            <br>
+            <div class="form-group">
+                <label for="pair">Pair</label>
+                <select name="pair" id=pair></select>
+            </div>
+
+            <div class="form-group">
+                <label for="isderivate">Is Derivate</label>
+                <select id="isderivate">
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </div>            
+            <div class="form-group">
+                <label for="percent">Is Percent size</label>
+                <select id="percent">
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select><br>
+                <label for="size">Size</label>
+                <input type="text" class="form-control" id="size" placeholder="Size position">
+            </div>
+            <div class="form-group">
+                <label for="side">Side</label>
+                <select name="side" id="side">
+                    <option value="0">Buy</option>
+                    <option value="1">Sell</option>
+                    <option value="-1">Close derivate position</option>
+
+                </select>
+            </div>
+
+            <button type="button" class="btn btn-primary" onclick="process_form();">Genera Messaggio TW</button>
+          </form>
+    </body>
+
+
+
+
+    <div class="bottom">
+    <label for="exampleFormControlTextarea1" readonly>Output</label>
+    <textarea class="form-control" id="processedjson" rows="3"></textarea>
+    </div>
+
+    <div id="donations" class="donations">
+        <p>
+            Donations at:
+            <div id="BTC">BTC: bc1qwevnlyl04eaap67dwpgxzvcf0vgsta85fvuj5j</div>
+            <div id="SOLANA">SOLANA: HEG6hrLEvPq4rzZgM34Ydx59rS16tCiF9edAeRmaebwp</div>
+        </p>
+    </div>
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</html>
