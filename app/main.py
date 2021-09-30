@@ -6,7 +6,10 @@ from ExchangeAdaptor import ExchangeAdaptor
 app = Flask(__name__)
 @app.route("/")
 def helloword():
-    return "ciao"
+    f=open("website/index.html","r")
+    index=f.read()
+    f.close()
+    return index
 
 @app.route('/getmarkets',methods=['GET'])
 def returnmarkets():
