@@ -1,11 +1,11 @@
-var BASEURI='http://gdeveloper.ddns.net'
+var BASEURI='https://twexchangeconnector.herokuapp.com'
 
 function loadExchanges()
 {
     $.ajax(
         {
-        //url : BASEURI+"/getexchanges",
-        url: "https://raw.githubusercontent.com/giogandola98/ExchangeTWConnector/main/listTemplate.html",
+        url : BASEURI+"/getexchanges",
+        //url: "https://raw.githubusercontent.com/giogandola98/ExchangeTWConnector/main/listTemplate.html",
         data: { format: 'html',},
         error : function(){alert("backend error");},
         success : function(data) 
@@ -24,8 +24,8 @@ function loadMarkets()
     console.log("loadMarkets");
     $.ajax(
         {
-        //url : BASEURI+"/getmarkets?exchange="+document.getElementById("exchange").value,
-        url: "https://raw.githubusercontent.com/giogandola98/ExchangeTWConnector/main/listTemplate.html",
+        url : BASEURI+"/getmarkets?exchange="+document.getElementById("exchange").value,
+        //url: "https://raw.githubusercontent.com/giogandola98/ExchangeTWConnector/main/listTemplate.html",
         data: { format: 'html',},
         error : function(){alert("backend error");},
         success : function(data) 
