@@ -41,9 +41,7 @@ def getExchanges():
 def orderProcessor():
     req=request.get_json()
     print(req)
-    no_error=exchange=ExchangeAdaptor(req)
-    if (no_error!=True):
-        return no_error
+    exchange=ExchangeAdaptor(req)
     return exchange.processOrder()
 
 
