@@ -58,7 +58,7 @@ class ExchangeAdaptor:
                 self.ticker=jsonitem['pair']
                 self.isderivate=int(jsonitem['isderivate'])
                 self.size=float(jsonitem['size'])
-                self.side=int(jsonitem['side']) 
+                self.side=int(jsonitem['side'])
                 self.percent=int(jsonitem['percent'])
                 self.api=jsonitem['api']
                 self.secret=jsonitem['secret']
@@ -88,6 +88,7 @@ class ExchangeAdaptor:
 
         except Exception as e:
             return str(e)
+            
     def getMarkets(self,exchange):
         if exchange==self.FTX:
             connector=FtxProcessor()

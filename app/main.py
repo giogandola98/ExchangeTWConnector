@@ -40,10 +40,9 @@ def getExchanges():
 @app.route('/',methods=['POST'])
 def orderProcessor():
     req=request.get_json()
-    print(req)
     exchange=ExchangeAdaptor(req)
     error=exchange.processOrder()
-    return ""
+    return error
 
 
 #serve(app, host='0.0.0.0', port=80, threads=10)
