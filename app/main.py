@@ -42,7 +42,8 @@ def orderProcessor():
     req=request.get_json()
     print(req)
     exchange=ExchangeAdaptor(req)
-    return exchange.processOrder()
+    error=exchange.processOrder()
+    return ""
 
 
 #serve(app, host='0.0.0.0', port=80, threads=10)
