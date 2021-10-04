@@ -30,7 +30,7 @@ class ExchangeAdaptor:
     def connectable_exchanges(self):
         self.exchanges=[]
         self.FTX="FTX"
-        self.BINANCE="BINANCE"
+        #self.BINANCE="BINANCE"
 
         self.exchanges.append(self.FTX)
         #self.exchanges.append(self.BINANCE)
