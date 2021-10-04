@@ -31,39 +31,66 @@ class FtxProcessor:
         return self.cctxConnector.symbols
         
     def getBalance(self, ticker):
-        return (self.cctxConnector.fetch_balance()[ticker]['free'])
-        pass
+        balance=self.cctxConnector.fetch_balance()[ticker]['free']
+        print(balance)
+        return balance
+
 
     def getActualPrice(self,ticker):
        return float(self.cctxConnector.fetchTicker(ticker)['last'])
 
-    def MarketBuy(self,ticker, size,percent=0,isDerivate=0):
-        x=""
-        if(percent!=0):
-            tick=ticker.split("/")
-            tick.append("X")
-            if isDerivate>0:
-                tick[1]="USD"            
-            size=float(self.getBalance(tick[1]))*size
-        try:
-            x=(self.cctxConnector.createMarketBuyOrder(ticker,size/self.getActualPrice(ticker)))
-        except Exception as e:
-            x=str(e)
-        return x
-
-    def MarketSell(self,ticker, sizebtc,percent=0,isDerivate=0):
-        x=""
+    def buyDerivate(self,ticker,size,percent):
+        print("DERIVATE MARKET BUY")
+        usdbalance=self.getBalance("USD")
+        print(usdbalance)
+        if(usdbalance==0):
+            t=ticker
+            inverseticker=t.split("-")[0]
+            inverseoinbalance=self.getBalance(inverseticker)*self.getActualPrice(ticker)
+            usdbalance=inverseoinbalance
+        
         if(percent>0):
-            tick=ticker.split("/")
-            tick.append("X")
-            if isDerivate>0:
-                tick=ticker.split("-")
-            sizebtc=float(self.getBalance(tick[0]))*sizebtc
-        try:
-            x=self.cctxConnector.createMarketSellOrder(ticker,sizebtc)
-        except Exception as e:
-            x=str(e)
-        return x
+            usdbalance=usdbalance*size
+        print(self.cctxConnector.createMarketBuyOrder(ticker,usdbalance/self.getActualPrice(ticker)))
+
+    def sellDerivate(self,ticker,size,percent):
+        print("DERIVATE MARKET BUY")
+        usdbalance=self.getBalance("USD")
+        print(usdbalance)
+        if(usdbalance==0):
+            t=ticker
+            inverseticker=t.split("-")[0]
+            inverseoinbalance=self.getBalance(inverseticker)*self.getActualPrice(ticker)
+            usdbalance=inverseoinbalance
+        
+        if(percent>0):
+            usdbalance=usdbalance*size
+        print(self.cctxConnector.createMarketSellOrder(ticker,size))
+        return ""
+
+    def MarketBuy(self,ticker, size,percent=0,isDerivate=0):
+        if(isDerivate):
+            return self.buyDerivate(ticker,size,percent)
+        basecoin=ticker.split("/")
+        
+        if(percent>0):
+            basecoin_balance=self.getBalance(basecoin[1])
+            size=basecoin_balance*size
+
+        print(self.cctxConnector.createMarketBuyOrder(ticker,size/self.getActualPrice(ticker)))
+        return ""
+        
+
+
+    def MarketSell(self,ticker, size,percent=0,isDerivate=0):
+        if isDerivate:
+            return self.sellDerivate(ticker,size,percent)
+        basecoin=ticker.split("/")
+        if(percent>0):
+            basecoin_balance=self.getBalance(basecoin[0])
+            size=basecoin_balance*size
+        print(self.cctxConnector.createMarketSellOrder(ticker,size))  
+        return ""
 
     def getFuturePosition(self,ticker):
         x= self.cctxConnector.private_get_positions()['result']
@@ -80,5 +107,6 @@ class FtxProcessor:
             x=self.cctxConnector.createMarketSellOrder(ticker,size,params={'reduce-only': True})
         else:
            x= self.cctxConnector.createMarketBuyOrder(ticker,size*-1,params={'reduce-only': True})
+        print(x)
         return x
         
