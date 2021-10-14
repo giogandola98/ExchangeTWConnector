@@ -1,5 +1,7 @@
 from logging import exception
 from FtxProcessor import FtxProcessor
+from BitMexProcessor import BitMexProcessor
+
 
 '''
 ADAPTOR TO EXCHANGE
@@ -31,9 +33,10 @@ class ExchangeAdaptor:
         self.exchanges=[]
         self.FTX="FTX"
         #self.BINANCE="BINANCE"
-
+        self.BITMEX="BITMEX"
         self.exchanges.append(self.FTX)
         #self.exchanges.append(self.BINANCE)
+        self.exchanges.append(self.BITMEX)
 
 
 
@@ -75,6 +78,9 @@ class ExchangeAdaptor:
             connector=""
             if self.exchange == self.FTX :
                 connector=FtxProcessor(self.api,self.secret,self.subaccount)
+
+            if self.exchange == self.BITMEX:
+                connector=BitMexProcessor(self.api,self.secret,self.subaccount)
 
             if self.side==0:
                 return connector.MarketBuy(self.ticker,self.size,self.percent,self.isderivate)

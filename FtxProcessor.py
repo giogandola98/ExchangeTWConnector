@@ -32,7 +32,6 @@ class FtxProcessor:
         
     def getBalance(self, ticker):
         balance=self.cctxConnector.fetch_balance()[ticker]['free']
-        print(balance)
         return balance
 
 
@@ -42,7 +41,7 @@ class FtxProcessor:
     def buyDerivate(self,ticker,size,percent):
         print("DERIVATE MARKET BUY")
         usdbalance=self.getBalance("USD")
-        print(usdbalance)
+        print("FREE BALANCE",usdbalance)
         if(usdbalance==0):
             t=ticker
             inverseticker=t.split("-")[0]
@@ -56,7 +55,7 @@ class FtxProcessor:
     def sellDerivate(self,ticker,size,percent):
         print("DERIVATE MARKET BUY")
         usdbalance=self.getBalance("USD")
-        print(usdbalance)
+        print("FREE BALANCE",usdbalance)
         if(usdbalance==0):
             t=ticker
             inverseticker=t.split("-")[0]
